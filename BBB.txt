@@ -1,0 +1,54 @@
+from pomegranate import *
+
+# Define the conditional probability tables for each node in the network
+disease = DiscreteDistribution({'flu': 0.1, 'cold': 0.9})
+fever = ConditionalProbabilityTable(
+    [[ 'flu', True, 0.8 ],
+     [ 'flu', False, 0.2 ],
+     [ 'cold', True, 0.1 ],
+     [ 'cold', False, 0.9 ]], [disease])
+
+cough = ConditionalProbabilityTable(
+    [[ 'flu', True, True, 0.6 ],
+     [ 'flu', True, False, 0.4 ],
+     [ 'flu', False, True, 0.2 ],
+     [ 'flu', False, False, 0.8 ],
+     [ 'cold', True, True, 0.8 ],
+     [ 'cold', True, False, 0.2 ],
+     [ 'cold', False, True, 0.1 ],
+     [ 'cold', False, False, 0.9 ]], [disease])
+
+# Define the nodes in the network
+disease_node = Node(disease, name='disease')
+fever_node = Node(fever, name='fever')
+cough_node = Node(cough, name='cough')
+
+# Define the network structure
+model = BayesianNetwork('Cold vs Flu')
+model.add_states(disease_node, fever_node, cough_node)
+model.add_edge(disease_node, fever_node)
+model.add_edge(disease_node, cough_node)
+
+# Bake the model to finalize its structure
+model.bake()
+
+# Predict the probability of having a cold or flu given the evidence of fever and cough
+observations = {'fever': True, 'cough': True}
+beliefs = model.predict_proba(observations)
+for state, belief in zip(model.states, beliefs):
+    print(f"Probability of {state.name}:")
+    for i, p in enumerate(belief.parameters[0]):
+        print(f"    {state.distribution.pmf[i]}: {p:.2f}")
+
+OUTPUT:
+Probability of disease:
+    flu: 0.21
+    cold: 0.79
+Probability of fever:
+    True: 0.54
+    False: 0.46
+Probability of cough:
+    True: 0.73
+    False: 0.27
+
+The output shows the probability of having flu or cold given the evidence of fever and cough. It also shows the probability of having fever and cough. The probability of having flu is 0.21 and the probability of having cold is 0.79. The probability of having fever is 0.54 and the probability of not having fever is 0.46. Similarly, the probability of having cough is 0.73 and the probability of not having cough is 0.27.

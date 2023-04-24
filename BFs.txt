@@ -1,0 +1,98 @@
+#include iostream
+#include bitsstdc++.h
+
+using namespace std;
+
+vectorbool v;
+vectorvectorint g;
+
+void bfsTraversal(int b)
+{
+    Declare a queue to store all the nodes connected to b
+    queueint q;
+
+    Insert b to queue
+    q.push(b);
+
+    mark b as visited
+    v[b] = true;
+
+    cout  nnThe BFS Traversal is  ;
+
+    while (!q.empty())
+    {
+        int a = q.front();
+        q.pop(); delete the first element form queue
+
+        for (auto j = g[a].begin(); j != g[a].end(); j++)
+        {
+            if (!v[j])
+            {
+                v[j] = true;
+                q.push(j);
+            }
+        }
+        cout  a    ;
+    }
+}
+
+void makeEdge(int a, int b)
+{
+    g[a].push_back(b); an edge from a to b (directed graph)
+}
+
+int main()
+{
+    cout  nnWelcome to Studytonight -)nnn;
+    cout   =====  Program to demonstrate the Breadth First Search Algorithm, in CPP  ===== nn;
+
+    cout   =====  Note; The vertices are numbered from 0 to n-1.  ===== nn;
+
+    int n, e;
+
+    cout  Enter the number of vertices ;
+
+    cin  n;
+
+    cout  nnEnter the number of edges ;
+
+    cin  e;
+
+    v.assign(n, false);
+    g.assign(n, vectorint());
+
+    int a, b, i;
+
+    cout  Enter the edges with source and target vetex n ;
+
+    for (i = 0; i  e; i++)
+    {
+        cin  a  b;
+        makeEdge(a, b);
+    }
+
+    for (i = 0; i  n; i++)
+    {
+        if the node i is unvisited
+        if (!v[i])
+        {
+            bfsTraversal(i);
+        }
+    }
+
+    cout  nnn;
+
+    return 0;
+}
+
+
+output:
+no of vertices :5
+enter no of edge:5
+enter edge with source and target vertex:
+0 1
+0 2
+03
+1 2
+1 4
+ the bfs traversal is: 0 1 2 3 4

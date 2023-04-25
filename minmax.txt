@@ -1,0 +1,116 @@
+
+#include <iostream>
+using namespace std;
+
+// Function of minmax algorithm will return the maximum value the Maximizer can get when both players play optimally.
+int minmax(bool maximizer, int finalStates[], int l, int r)
+{
+    // If we are on the leaf of the tree. Return the statistical value.
+    if (l == r)
+    {
+        return finalStates[l];
+    }
+
+    // Find the middle of the states.
+    int mid = (l + r) / 2;
+cout<<"\n";
+    // If it's Maximizers turn, we have to find the maximum value.
+    if (maximizer)
+    {
+        cout<<"max :"<<max(minmax(false, finalStates, l, mid), minmax(false, finalStates, mid + 1, r));
+        return max(minmax(false, finalStates, l, mid), minmax(false, finalStates, mid + 1, r));
+    }
+
+    // If it's Minimizers turn Minimum value is returned.
+    
+        cout<<"min :"<<min(minmax(true, finalStates, l, mid), minmax(true, finalStates, mid + 1, r));
+         return min(minmax(true, finalStates, l, mid), minmax(true, finalStates, mid + 1, r));
+   
+}
+
+int main()
+{
+    int n;
+    cout << "Enter the number of final states N, where ( N = 2^x ) :";
+    cin >> n;
+    cout << "Enter the final states : \n";
+    int finalStates[n];
+    for (int i = 0; i < n; i++)
+    {
+        cin >> finalStates[i];
+    }
+
+    int ans = minmax(true, finalStates, 0, n - 1);
+cout<<"\n";
+    cout << " Best The Maximizer can get : " << ans << endl;
+
+    return 0;
+}
+
+
+
+
+/tmp/54pX3ZOZxe.o
+Enter the number of final states N, where ( N = 2^x ) :8
+Enter the final states : 
+-2 3 5 12 9 8 -7 -3
+max :
+min :
+max :-3
+max :9-3
+max :-3
+max :9
+min :
+max :12
+max :33
+max :12
+max :33
+min :
+max :-3
+max :9-3
+max :-3
+max :9
+min :
+max :12
+max :33
+max :12
+max :3
+ Best The Maximizer can get : 3
+ 
+ 
+ import math
+def minmax(cd,node,maxt,scr,td):
+    if (cd==td):
+        return scr[node]
+    if(maxt):
+            print("max:",max(minmax(cd+1,node*2,False,scr,td),minmax(cd+1,node*2+1,False,scr,td)))
+            return max(minmax(cd+1,node*2,False,scr,td),minmax(cd+1,node*2+1,False,scr,td))
+    else:
+        print("max:",max(minmax(cd+1,node*2,True,scr,td),minmax(cd+1,node*2+1,True,scr,td)))
+        return max(minmax(cd+1,node*2,True,scr,td),minmax(cd+1,node*2+1,True,scr,td))
+    
+    
+scr=[]
+x=int(input("Enter the number of leaf nodes"))
+for i in range(x):
+    y=int(input("Enter the leaf node"))
+    scr.append(y)
+    
+td=math.log(len(scr),2)
+cd=int(input("Enter the current depth"))
+node=int(input("Enter the node value"))
+max=True
+ans=minmax(cd,node,max,scr,td)
+print("OPtimal solution is ",ans)
+
+
+output:
+
+Enter the number of leaf nodes4
+Enter the leaf node1
+Enter the leaf node2
+Enter the leaf node3
+Enter the leaf node5
+Enter the current depth0
+Enter the node value0
+otimal sol:3

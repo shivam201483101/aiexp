@@ -23,7 +23,7 @@ def isIndentifier(ch):
     return True
 
 
-str = "float x = a + b"
+str = "float x = ( a + b )"
 characters = str.split(" ")
 for ch in characters:
     if isKeyword(ch):

@@ -52,3 +52,68 @@ Probability of cough:
     False: 0.27
 
 The output shows the probability of having flu or cold given the evidence of fever and cough. It also shows the probability of having fever and cough. The probability of having flu is 0.21 and the probability of having cold is 0.79. The probability of having fever is 0.54 and the probability of not having fever is 0.46. Similarly, the probability of having cough is 0.73 and the probability of not having cough is 0.27.
+
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+#include <iostream>
+#include <vector>
+#include <cmath>
+
+using namespace std;
+
+class Node {
+public:
+    vector<double> values;
+};
+
+class VariableNode : public Node {
+public:
+    int numValues;
+};
+
+class CPT {
+public:
+    vector<double> probabilities;
+};
+
+class BayesianNetwork {
+public:
+    VariableNode A, B;
+    CPT cptA, cptB;
+
+
+    double query(int a, int b) {
+        double result = 0.0;
+        for (int i = 0; i < A.numValues; i++) {
+            for (int j = 0; j < B.numValues; j++) {
+                result += cptA.probabilities[i] * cptB.probabilities[j] * (a == i) * (b == j);
+            }
+        }
+        return result;
+    }
+};
+
+int main() {
+    BayesianNetwork net;
+    net.A.numValues = 2;
+    net.B.numValues = 2;
+    net.A.values = {0.3, 0.7};
+    net.B.values = {0.6, 0.4};
+    net.cptA.probabilities = {0.7, 0.3};
+    net.cptB.probabilities = {0.4, 0.6};
+
+    double q = net.query(0, 1);
+    cout << "P(A=0, B=1) = " << q << endl;
+    return 0;
+}
+
+output:
+
+P(A=0, B=1) = 0.42
+
+

@@ -1,0 +1,7 @@
+
+pass1: bit.ly/1997pass10
+pass2: bit.ly/1997pass2
+intermediate code : bit.ly/1997interc
+lexical analyzer: bit.ly/1997lex
+shift-reduce parser: bit.ly/1997shiftr
+all : bit.ly/systemc
